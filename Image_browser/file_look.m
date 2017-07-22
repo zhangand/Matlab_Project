@@ -22,7 +22,7 @@ function varargout = file_look(varargin)
 
 % Edit the above text to modify the response to help file_look
 
-% Last Modified by GUIDE v2.5 15-Aug-2009 10:47:32
+% Last Modified by GUIDE v2.5 17-Jul-2017 23:01:50
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -52,7 +52,8 @@ varargout{1} = handles.output;
 
 function sel_dir_Callback(hObject, eventdata, handles)
 global str str2 index
-str=uigetdir('C:\Documents and Settings\Administrator\×ÀÃæ','Ñ¡ÔñÄ¿Â¼');
+str=uigetdir('.\');
+str_tif=dir([str '\*.tif']);
 str_jpg=dir([str '\*.jpg']);
 str_bmp=dir([str '\*.bmp']);
 str_gif=dir([str '\*.gif']);
@@ -183,3 +184,44 @@ M=imread([str '\' str2{1,index}]);
 image(M);
 axis off
 
+
+
+% --------------------------------------------------------------------
+function Folder_Open_Callback(hObject, eventdata, handles)
+% hObject    handle to Folder_Open (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global str str2 index
+str=uigetdir('.\');
+str_tif=dir([str '\*.tif']);
+str_jpg=dir([str '\*.jpg']);
+str_bmp=dir([str '\*.bmp']);
+str_gif=dir([str '\*.gif']);
+str1=[str_jpg;str_bmp;str_gif];
+str2=struct2cell(str1);
+if ~isempty(str1)
+    n=find(str2{4}==1);
+    str2(:,n)=[];
+end
+index=1;
+set(handles.pic_name,'string',str2{1,1})
+M=imread([str '\' str2{index,1}]);
+image(M);
+
+axis off
+
+% --------------------------------------------------------------------
+function Exit_Callback(hObject, eventdata, handles)
+% hObject    handle to Exit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+axis off
+
+
+% --------------------------------------------------------------------
+function About_Callback(hObject, eventdata, handles)
+% hObject    handle to About (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+axis off
