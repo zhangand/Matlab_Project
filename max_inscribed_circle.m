@@ -69,7 +69,19 @@ function [R cx cy]=max_inscribed_circle(ContourImage, display)
 % get the contour
 sz=size(ContourImage);
 [Y,X]=find(ContourImage==1,1, 'first');
+if(isempty(X)|isempty(Y))
+    R = 1;
+    cx = 1;
+    cy = 1;
+    return;
+end
 [boundary] = bwboundaries(ContourImage,'noholes');
+if(isempty(boundary))
+    R = 1;
+    cx = 1;
+    cy = 1;
+    return;
+end
 X=boundary{1}(:,2);
 Y=boundary{1}(:,1);
 
